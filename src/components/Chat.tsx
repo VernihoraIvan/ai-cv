@@ -5,6 +5,7 @@ import { ArrowUpCircle, Bot } from "lucide-react";
 import FallingStars from "./FallingStars";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "next-themes";
+import ReactMarkdown from "react-markdown";
 
 type Message = {
   content: string;
@@ -177,9 +178,7 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                     } border`
               }`}
             >
-              <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">
-                {message.content}
-              </p>
+              <ReactMarkdown>{message.content}</ReactMarkdown>
             </div>
           </div>
         ))}
