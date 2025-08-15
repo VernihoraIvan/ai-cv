@@ -29,6 +29,11 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -126,6 +131,10 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
 
   const { theme } = useTheme();
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div
       className={`relative flex flex-col h-screen ${
@@ -136,7 +145,7 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
         <ThemeToggle />
       </div>
       <FallingStars theme={theme} />
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 z-10">
+      <main className="flex-1 w-max-w-4xl mx-auto overflow-y-auto py-16 px-4 md:px-6 space-y-4 z-10 no-scrollbar">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -209,7 +218,7 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                 <button
                   key={question}
                   onClick={() => handleSend(question)}
-                  className={`backdrop-blur-sm border rounded-xl p-3 text-left text-sm transition-colors shadow-sm ${
+                  className={`backdrop-blur-sm border rounded-xl p-3 text-left text-sm transition-colors shadow-sm cursor-pointer ${
                     theme === "dark"
                       ? "bg-gray-900/70 border-gray-700 hover:bg-gray-800"
                       : "bg-blue-50/70 border-blue-200 hover:bg-blue-100"
@@ -238,7 +247,7 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                 <button
                   type="submit"
                   disabled={isLoading || input.trim() === ""}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <ArrowUpCircle className="h-8 w-8 text-blue-500 hover:text-blue-600 transition-colors" />
                 </button>
