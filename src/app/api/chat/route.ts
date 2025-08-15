@@ -1,6 +1,7 @@
-import { smoothStream, streamText } from "ai";
+import { smoothStream, streamText, embed } from "ai";
 import { createSupabaseClient } from "@/lib/supabaseClient";
 import { createVertex } from "@ai-sdk/google-vertex/edge";
+import { createAzure } from "@ai-sdk/azure";
 
 export const dynamic = "force-dynamic";
 
@@ -33,17 +34,43 @@ export async function POST(req: Request) {
     return new Response("Failed to save user message", { status: 500 });
   }
 
-  // Fetch chat history from Supabase
-  const { data: history, error: historyError } = await supabase
-    .from("chat_messages")
-    .select("content, role")
-    .eq("session_id", sessionId)
-    .order("created_at", { ascending: true });
+  // Generate embedding for user message
+  const azure = createAzure({
+    resourceName: "ai-powered-cv117",
+    apiKey: process.env.AZURE_OPENAI_API_KEY,
+  });
 
-  if (historyError) {
-    console.error("Error fetching chat history:", historyError);
-    return new Response("Failed to fetch chat history", { status: 500 });
+  const embeddingModel = azure.textEmbeddingModel("text-embedding-3-small", {
+    dimensions: 768,
+  });
+
+  const { embedding } = await embed({
+    model: embeddingModel,
+    value: userMessage.content,
+  });
+
+  console.log("User message:", userMessage.content);
+
+  // Query for similar documents
+  const { data: documents, error: matchError } = await supabase.rpc(
+    "match_documents",
+    {
+      query_embedding: embedding,
+      match_threshold: 0.1,
+      match_count: 5,
+    }
+  );
+
+  if (matchError) {
+    console.error("Error matching documents:", matchError);
+    return new Response("Failed to match documents", { status: 500 });
   }
+
+  console.log("Found documents:", documents);
+
+  const context = documents.map((doc: any) => `- ${doc.content}`).join("\n");
+
+  console.log("Context:", context);
 
   const googleProjectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
   const googleRegion = process.env.GOOGLE_REGION;
@@ -73,11 +100,9 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model,
-    messages: history.map((msg: any) => ({
-      role: msg.role,
-      content: msg.content,
-    })),
-    experimental_transform: smoothStream() as any,
+    experimental_transform: smoothStream(),
+    system: `You are an AI assistant for a software engineer's CV. Answer the user's questions based on the following context. If the answer is not in the context, say that you don't know.\n\nContext:\n${context}`,
+    messages,
     onFinish: async ({ text }) => {
       // Save bot reply to Supabase
       const { error: botMessageError } = await supabase
