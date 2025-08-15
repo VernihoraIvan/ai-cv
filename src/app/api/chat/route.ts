@@ -5,8 +5,6 @@ import { createSupabaseClient } from "@/lib/supabaseClient";
 import { createVertex } from "@ai-sdk/google-vertex/edge";
 import { createAzure } from "@ai-sdk/azure";
 
-export const dynamic = "force-dynamic";
-
 type Document = {
   content: string;
   embedding: number[];
