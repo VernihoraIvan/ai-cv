@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEvent } from "react";
+import { ArrowUpCircle, Bot } from "lucide-react";
+import FallingStars from "./FallingStars";
+import { ThemeToggle } from "./ThemeToggle";
 
 type Message = {
   content: string;
@@ -12,11 +15,31 @@ type ChatProps = {
   sessionId: string;
 };
 
+const exampleQuestions = [
+  "What's your technical background?",
+  "Tell me about your AI experience",
+  "What are your most significant projects?",
+  "What technologies do you specialize in?",
+  "What kind of role are you looking for?",
+];
+
 export default function Chat({ initialMessages, sessionId }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          role: "assistant",
+          content:
+            "Hello! I'm an AI assistant representing Ivan. Feel free to ask me anything about his skills, experience, and projects. How can I help you?",
+        },
+      ]);
+    }
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -26,12 +49,14 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
-    if (input.trim() === "" || isLoading) return;
+  const handleSend = async (messageContent: string) => {
+    if (messageContent.trim() === "" || isLoading) return;
 
-    const userMessage: Message = { content: input, role: "user" };
+    const userMessage: Message = { content: messageContent, role: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setInput("");
+    if (messageContent === input) {
+      setInput("");
+    }
     setIsLoading(true);
 
     try {
@@ -78,69 +103,109 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
         content: "Sorry, something went wrong.",
         role: "assistant",
       };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      setMessages((prevMessages) => {
+        const newMessages = [...prevMessages];
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (lastMessage.role === "assistant" && lastMessage.content === "") {
+          newMessages[newMessages.length - 1] = errorMessage;
+        } else {
+          newMessages.push(errorMessage);
+        }
+        return newMessages;
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    handleSend(input);
+  };
+
   return (
-    <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
-      <header className="p-4 bg-white dark:bg-gray-800 border-b dark:border-gray-700 shadow-md">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center">
-          AI Chatbot
-        </h1>
-      </header>
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="space-y-6">
-          {messages.map((message, index) => (
+    <div className="relative flex flex-col h-screen bg-white dark:bg-black text-black dark:text-white">
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeToggle />
+      </div>
+      <FallingStars />
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 z-10">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`flex items-start gap-3 ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
+            {message.role === "assistant" && (
+              <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                <Bot className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              </div>
+            )}
             <div
-              key={index}
-              className={`flex items-end gap-2 ${
-                message.role === "user" ? "justify-end" : "justify-start"
+              className={`max-w-lg lg:max-w-xl px-4 py-2.5 rounded-2xl shadow-sm ${
+                message.role === "user"
+                  ? "bg-blue-500 text-white"
+                  : "bg-white dark:bg-gray-800 text-black dark:text-white border border-gray-200 dark:border-gray-700"
               }`}
             >
-              <div
-                className={`max-w-lg px-4 py-3 rounded-2xl shadow ${
-                  message.role === "user"
-                    ? "bg-blue-600 text-white rounded-br-none"
-                    : "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-none"
-                }`}
-              >
-                <p className="text-sm">{message.content}</p>
-              </div>
+              <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">
+                {message.content}
+              </p>
             </div>
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="max-w-lg px-4 py-3 rounded-2xl shadow bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-none">
-                <p className="text-sm">...</p>
-              </div>
+          </div>
+        ))}
+        {isLoading && messages[messages.length - 1].role === "user" && (
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+              <Bot className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            </div>
+            <div className="max-w-lg px-4 py-2.5 rounded-2xl shadow-sm bg-white dark:bg-gray-800 text-black dark:text-white border border-gray-200 dark:border-gray-700">
+              <p className="text-sm">...</p>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </main>
+
+      <div className="px-4 pb-4 bg-transparent z-10">
+        <div className="max-w-2xl mx-auto">
+          {messages.length <= 1 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 mb-4">
+              {exampleQuestions.map((question) => (
+                <button
+                  key={question}
+                  onClick={() => handleSend(question)}
+                  className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-sm"
+                >
+                  {question}
+                </button>
+              ))}
             </div>
           )}
-          <div ref={messagesEndRef} />
+          <div className="relative">
+            <form onSubmit={handleSubmit}>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  className="w-full pl-4 pr-12 py-3.5 rounded-full bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-shadow shadow-sm"
+                  placeholder="Ask me anything about Ivan..."
+                  disabled={isLoading}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || input.trim() === ""}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ArrowUpCircle className="h-8 w-8 text-blue-500 hover:text-blue-600 transition-colors" />
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </main>
-      <footer className="p-4 bg-white dark:bg-gray-800 border-t dark:border-gray-700">
-        <div className="flex items-center max-w-2xl mx-auto">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="flex-1 w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-            placeholder="Type your message..."
-            disabled={isLoading}
-          />
-          <button
-            onClick={handleSend}
-            disabled={isLoading}
-            className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300"
-          >
-            Send
-          </button>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
