@@ -1,11 +1,20 @@
 {
+  "name": "Ivan Vernihora",
+  "location": "Berlin, Germany",
+  "age": 27,
+  "nationality": "Ukrainian",
+  "languages": ["English", "German", "Ukrainian"],
+  "interests": ["AI", "Web Development", "Cloud Computing"],
+  "email": "ivan.vernihora@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/ivan-vernihora",
+  "github": "https://github.com/VernihoraIvan",
   "summary": "Results-driven Full-Stack Developer with a track record of building intuitive, user-centric web applications. Skilled in TypeScript, React, Next.js, and Node.js, with recent focus on AI-powered features such as personalised recommendations, automated workflows, and multimodal chat integrations.",
-  "experience": [
+  "programmingExperience": [
     {
       "company": "acemate.ai",
       "companyDescription": "acemate.ai is an innovative German edtech startup on a mission to democratize access to personalized education through artificial intelligence. Its platform empowers both students and educators with tools that transform traditional, static documents into dynamic, interactive learning experiences.",
       "role": "Full-Stack Developer",
-      "period": "10/2024 – 07/2025",
+      "period": "10/2024 - 07/2025",
       "highlights": [
         "Developed AI analytics using LLMs to summarise user activity, delivering actionable insights through automated summarisation.",
         "Built a scalable Zustand state management architecture across the application, improving maintainability and performance.",
@@ -20,7 +29,7 @@
     {
       "company": "Creative Branch",
       "role": "Full-Stack Developer",
-      "period": "06/2024 – 12/2024",
+      "period": "06/2024 - 12/2024",
       "highlights": [
         "Designed and implemented full-stack architecture using React, NestJS, and MySQL.",
         "Integrated email subscription workflows via Resend and secure payment processing via Stripe.",
@@ -30,7 +39,7 @@
     {
       "company": "Freelance",
       "role": "Full-Stack Developer",
-      "period": "10/2023 – 05/2024",
+      "period": "10/2023 - 05/2024",
       "highlights": [
         "Developed and deployed custom websites for small businesses to enhance online presence and customer engagement.",
         "Delivered complete solutions including authentication, contact forms, and CMS integrations.",
@@ -40,7 +49,18 @@
     {
       "company": "V. Ships Greece",
       "role": "Marine Engineer",
-      "period": "05/2018 – 08/2022",
+      "period": "05/2018 - 08/2022",
+      "highlights": [
+        "Performed maintenance on boilers, engines, purifiers, pumps, compressors, and pneumatic/hydraulic systems.",
+        "Supervised and managed engineering crew members including oilers, wipers, and cadets."
+      ]
+    }
+  ],
+  "nonProgrammingExperience": [
+    {
+      "company": "V. Ships Greece",
+      "role": "Marine Engineer",
+      "period": "05/2018 - 08/2022",
       "highlights": [
         "Performed maintenance on boilers, engines, purifiers, pumps, compressors, and pneumatic/hydraulic systems.",
         "Supervised and managed engineering crew members including oilers, wipers, and cadets."
@@ -53,7 +73,7 @@
     "Multimodal chatbot supporting text and image inputs, integrated with Gemini models.",
     "E-commerce platform with payment processing (Stripe) and subscription workflows (Resend) built on React + NestJS."
   ],
-  "skills": [
+  "generalSkills": [
     "TypeScript",
     "Next.js",
     "React.js",
@@ -88,5 +108,10 @@
     "Uppy",
     "AWS S3"
   ],
-  "education": "Software Development, 42 Berlin (2023–2025); Full-Stack Development, Coding Bootcamp (2022–2023); Bachelor's in Marine Engineering, Kherson Maritime State Academy (2017–2020); Junior Specialist in Marine Engineering, Odesa Maritime College of Technical Fleet (2013–2017)"
+  "education": [
+    "Software Development, 42 Berlin (2023-2025)",
+    "Full-Stack Development, Coding Bootcamp (2022-2023)",
+    "Bachelor's in Marine Engineering, Kherson Maritime State Academy (2017-2020)",
+    "Junior Specialist in Marine Engineering, Odesa Maritime College of Technical Fleet (2013-2017)"
+  ]
 }
