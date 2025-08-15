@@ -5,6 +5,11 @@ import { createAzure } from "@ai-sdk/azure";
 
 export const dynamic = "force-dynamic";
 
+type Document = {
+  content: string;
+  embedding: number[];
+};
+
 export async function POST(req: Request) {
   const supabase = createSupabaseClient();
   const { messages, sessionId } = await req.json();
@@ -68,7 +73,9 @@ export async function POST(req: Request) {
 
   console.log("Found documents:", documents);
 
-  const context = documents.map((doc: any) => `- ${doc.content}`).join("\n");
+  const context = documents
+    .map((doc: Document) => `- ${doc.content}`)
+    .join("\n");
 
   console.log("Context:", context);
 

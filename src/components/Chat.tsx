@@ -90,7 +90,7 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
       const decoder = new TextDecoder();
       let done = false;
 
-      let botMessage: Message = { content: "", role: "assistant" };
+      const botMessage: Message = { content: "", role: "assistant" };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
 
       while (!done) {
