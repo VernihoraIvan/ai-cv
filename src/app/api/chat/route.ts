@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { smoothStream, streamText, embed } from "ai";
 import { createSupabaseClient } from "@/lib/supabaseClient";
 import { createVertex } from "@ai-sdk/google-vertex/edge";

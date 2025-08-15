@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import Chat from "@/components/Chat";
 import { createNewSession } from "@/lib/session";
 import { getChatMessages } from "@/lib/queries/chat_messages";
