@@ -1,8 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  basePath: "/ad-cv-nextjs",
-  assetPrefix: "/ad-cv-nextjs",
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
