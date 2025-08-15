@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, FormEvent } from "react";
 import { ArrowUpCircle, Bot } from "lucide-react";
 import FallingStars from "./FallingStars";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "next-themes";
 
 type Message = {
   content: string;
@@ -123,12 +124,18 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
     handleSend(input);
   };
 
+  const { theme } = useTheme();
+
   return (
-    <div className="relative flex flex-col h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div
+      className={`relative flex flex-col h-screen ${
+        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="absolute top-4 right-4 z-20">
         <ThemeToggle />
       </div>
-      <FallingStars />
+      <FallingStars theme={theme} />
       <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 z-10">
         {messages.map((message, index) => (
           <div
@@ -138,15 +145,27 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
             }`}
           >
             {message.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
-                <Bot className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  theme === "dark" ? "bg-gray-800" : "bg-gray-200"
+                }`}
+              >
+                <Bot
+                  className={`h-5 w-5 ${
+                    theme === "dark" ? "text-gray-400" : "text-gray-500"
+                  }`}
+                />
               </div>
             )}
             <div
               className={`max-w-lg lg:max-w-xl px-4 py-2.5 rounded-2xl shadow-sm ${
                 message.role === "user"
                   ? "bg-blue-500 text-white"
-                  : "bg-white dark:bg-gray-800 text-black dark:text-white border border-gray-200 dark:border-gray-700"
+                  : `${
+                      theme === "dark"
+                        ? "bg-gray-800 text-white border-gray-700"
+                        : "bg-blue-50 text-blue-900 border-blue-200"
+                    } border`
               }`}
             >
               <p className="text-sm md:text-base whitespace-pre-wrap leading-relaxed">
@@ -157,10 +176,24 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
         ))}
         {isLoading && messages[messages.length - 1].role === "user" && (
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
-              <Bot className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                theme === "dark" ? "bg-gray-800" : "bg-gray-200"
+              }`}
+            >
+              <Bot
+                className={`h-5 w-5 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-500"
+                }`}
+              />
             </div>
-            <div className="max-w-lg px-4 py-2.5 rounded-2xl shadow-sm bg-white dark:bg-gray-800 text-black dark:text-white border border-gray-200 dark:border-gray-700">
+            <div
+              className={`max-w-lg px-4 py-2.5 rounded-2xl shadow-sm border ${
+                theme === "dark"
+                  ? "bg-gray-800 text-white border-gray-700"
+                  : "bg-blue-50 text-blue-900 border-blue-200"
+              }`}
+            >
               <p className="text-sm">...</p>
             </div>
           </div>
@@ -176,7 +209,11 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                 <button
                   key={question}
                   onClick={() => handleSend(question)}
-                  className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-sm"
+                  className={`backdrop-blur-sm border rounded-xl p-3 text-left text-sm transition-colors shadow-sm ${
+                    theme === "dark"
+                      ? "bg-gray-900/70 border-gray-700 hover:bg-gray-800"
+                      : "bg-blue-50/70 border-blue-200 hover:bg-blue-100"
+                  }`}
                 >
                   {question}
                 </button>
@@ -190,7 +227,11 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  className="w-full pl-4 pr-12 py-3.5 rounded-full bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-shadow shadow-sm"
+                  className={`w-full pl-4 pr-12 py-3.5 rounded-full backdrop-blur-sm border focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-shadow shadow-sm ${
+                    theme === "dark"
+                      ? "bg-gray-900/70 border-gray-700"
+                      : "bg-blue-50/70 border-blue-200"
+                  }`}
                   placeholder="Ask me anything about Ivan..."
                   disabled={isLoading}
                 />

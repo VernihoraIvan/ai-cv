@@ -12,7 +12,7 @@
 .star {
   position: absolute;
   top: -10px;
-  background-color: white;
+  background-color: var(--star-color);
   border-radius: 50%;
   animation: fall linear infinite;
   opacity: 0;

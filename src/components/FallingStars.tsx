@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import styles from "./FallingStars.module.css";
 
-const FallingStars = () => {
+const FallingStars = ({ theme }: { theme: string | undefined }) => {
   const [stars, setStars] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
@@ -17,13 +17,16 @@ const FallingStars = () => {
         <div
           key={Math.random()}
           className={styles.star}
-          style={{
-            width: `${size}px`,
-            height: `${size}px`,
-            left: `${left}%`,
-            animationDuration: `${animationDuration}s`,
-            animationDelay: `${animationDelay}s`,
-          }}
+          style={
+            {
+              "--star-color": theme === "light" ? "#000" : "#FFF",
+              width: `${size}px`,
+              height: `${size}px`,
+              left: `${left}%`,
+              animationDuration: `${animationDuration}s`,
+              animationDelay: `${animationDelay}s`,
+            } as React.CSSProperties
+          }
         />
       );
     };
@@ -33,7 +36,7 @@ const FallingStars = () => {
     }, 200);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [theme]);
 
   const memoizedStars = useMemo(() => stars, [stars]);
 
