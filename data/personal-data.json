@@ -1,0 +1,34 @@
+{
+  "summary": "Senior software engineer with 8+ years in AI/ML and full-stack.",
+  "experience": [
+    {
+      "company": "Acme Corp",
+      "role": "Staff Engineer",
+      "period": "2022–Present",
+      "highlights": [
+        "Led migration to vector search with pgvector",
+        "Shipped multi-tenant chat platform at scale"
+      ]
+    },
+    {
+      "company": "Beta Inc",
+      "role": "Senior Engineer",
+      "period": "2019–2022",
+      "highlights": ["Built data workflows", "Mentored team"]
+    }
+  ],
+  "projects": [
+    "RAG assistant for internal docs using pgvector and Vertex AI",
+    "Realtime analytics dashboard with React + Recharts"
+  ],
+  "skills": [
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Postgres",
+    "Supabase",
+    "Vertex AI",
+    "pgvector"
+  ],
+  "education": "B.S. in Computer Science"
+}
