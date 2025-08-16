@@ -1,3 +1,5 @@
+"use server";
+
 import { createSupabaseClient } from "../supabaseClient";
 
 export const getChatMessages = async (sessionId: string) => {
