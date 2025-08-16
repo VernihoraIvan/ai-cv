@@ -109,10 +109,23 @@ async function main() {
   // Embed nationality
   await embedAndStore("nationality", personalData.nationality);
 
-  // Embed interests
-  for (const [index, interest] of personalData.interests.entries()) {
-    await embedAndStore("interest", interest, { index });
+  // Embed 42Berlin
+  await embedAndStore(
+    "42Berlin_description",
+    personalData["42Berlin"].description
+  );
+  for (const [index, highlight] of personalData[
+    "42Berlin"
+  ].highlights.entries()) {
+    await embedAndStore("42Berlin_highlight", highlight, { index });
   }
+
+  // Embed workshops
+  for (const [index, workshop] of personalData.workshops.entries()) {
+    const content = `${workshop.name}: ${workshop.description} at ${workshop.location}`;
+    await embedAndStore("workshop", content, { index });
+  }
+
   console.log("Embedding and storing complete.");
 }
 

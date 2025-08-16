@@ -4,7 +4,13 @@
   "age": 27,
   "nationality": "Ukrainian",
   "languages": ["English", "German", "Ukrainian"],
-  "interests": ["AI", "Web Development", "Cloud Computing"],
+  "interests": [
+    "AI",
+    "Web Development",
+    "Cloud Computing",
+    "Football",
+    "Traveling"
+  ],
   "email": "ivan.vernihora@gmail.com",
   "linkedin": "https://www.linkedin.com/in/ivan-vernihora",
   "github": "https://github.com/VernihoraIvan",
@@ -63,7 +69,10 @@
       "period": "05/2018 - 08/2022",
       "highlights": [
         "Performed maintenance on boilers, engines, purifiers, pumps, compressors, and pneumatic/hydraulic systems.",
-        "Supervised and managed engineering crew members including oilers, wipers, and cadets."
+        "Supervised and managed engineering crew members including oilers, wipers, and cadets.",
+        "Conducted regular safety drills and maintained safety equipment.",
+        "Managed full generator engines and propulsion systems overhaul and maintenance.",
+        ""
       ]
     }
   ],
@@ -72,6 +81,83 @@
     "Automated AI content pipeline with Cloudflare Workers for PDF ingestion, vector storage, and exam generation.",
     "Multimodal chatbot supporting text and image inputs, integrated with Gemini models.",
     "E-commerce platform with payment processing (Stripe) and subscription workflows (Resend) built on React + NestJS."
+  ],
+  "42Berlin": {
+    "description": "42 Berlin is a software development school that teaches students how to code in a hands-on, project-based environment. It is a 42-hour program that teaches students how to code in a hands-on, project-based environment. It is a 42-hour program that teaches students how to code in a hands-on, project-based environment.",
+    "highlights": [
+      "Learned how to code in a hands-on, project-based environment.",
+      "Worked on real-world projects with a team of 2-3 people.",
+      "Learned C and C++ programming languages.",
+      "Created my own version of shell in C.",
+      "Developed a simple 3D game in C."
+    ]
+  },
+  "workshops": [
+    {
+      "name": "Theta AI2NFT Workshop",
+      "description": "In this hands-on workshop, I learned how to build a complete AI-powered NFT creation platform that seamlessly combines cutting-edge artificial intelligence with blockchain technology. By the end of this workshop, I have created a full-stack application that can generate images using AI and automatically mint them as NFTs on the Theta blockchain.",
+      "location": "42 Berlin, Berlin"
+    },
+    {
+      "name": "Quantum Computing Workshop",
+      "description": "In this hands-on workshop we walked through the process of solving a classic combinatorial optimization problem—the Traveling Salesperson Problem (TSP)—using a quantum-inspired approach.",
+      "location": "42 Berlin, Berlin"
+    },
+    {
+      "name": "Sustainable Business Models",
+      "description": "A hands-on workshop by TU Berlin at EINS coworking space, combining theory and practice to help you design sustainable business models for your projects.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Company Foundation (GmbH) - Legal Aspects",
+      "description": "During the establishment of a GmbH, important regulations can be put in place to manage the collaboration of the founding team and prepare for potential investor entry. The workshop addresses not only the legal fundamentals but also strategic considerations, allowing founders to make targeted progress with their project.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Pitch Training Workshop",
+      "description": "Understanding and learning about some fundamental topics in communication will enable participants to speak publicly with less fear more confidence and authentic presence.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Steuerrecht für Gründer*innen",
+      "description": "Gründer*innen sind vorrangig mit Ihrer Idee befasst. Es ist daher plausibel, dass nach anerkannten Studien einem erfolgreichen Unternehmensaufbau aber insbesondere kaufmännische Defizite im Wege stehen.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Your Startup, Your Story: Turning Purpose into Impact",
+      "description": "This workshop helps entrepreneurs clarify their purpose, craft an authentic story, and share their startup journey in a way that inspires others and builds meaningful connections.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Communication Tools to Deal with Conflicts as a Team",
+      "description": "This workshop provides essential skills and strategies for navigating and resolving conflicts collaboratively.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Pitchdeck Design",
+      "description": "In the pitch deck design workshop, you will receive practical tips and tricks for designing your presentations. In addition to covering design basics such as typography, colors, and layout, you will learn what to focus on for a professional design and how to effectively utilize individual design elements.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "Design your GTM Foundation: ICP, PMF, Messaging & the Bow-Tie Revenue Model",
+      "description": "This workshop focuses on go-to-market strategy, revenue generation, and digital growth. Participants will explore how to scale B2B tech businesses across sectors such as SaaS, FinTech, and EdTech, learning practical approaches to build strong commercial engines, align strategies, and drive measurable growth.",
+      "location": "AI Campus, Berlin"
+    },
+    {
+      "name": "Employment law basics for startups",
+      "description": "This workshop discusses the basic rules of German labor law that every founder should know. Among other things, the most important legal regulations from the establishment of an employment relationship to its termination will be discussed.",
+      "location": "TU Berlin, Berlin"
+    },
+    {
+      "name": "EU AI ACT / IP Law",
+      "description": "This workshop provides an overview of the EU AI Act and the importance of intellectual property (IP) in the context of AI. It covers the key aspects of IP law, including copyright, patents, and trade secrets, and how they apply to AI-related inventions and creations.",
+      "location": "AI Campus, Berlin"
+    },
+    {
+      "name": "Value Centric UX for Startups: Human & Value Centered Design Workshop",
+      "description": "This workshop teaches you how to create a value-centric user experience for your startup. I learned how to use human-centered design and value-centered design to create a user experience that is tailored to my startup and my audience.",
+      "location": "TU Berlin, Berlin"
+    }
   ],
   "generalSkills": [
     "TypeScript",
