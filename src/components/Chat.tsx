@@ -19,11 +19,12 @@ type ChatProps = {
 };
 
 const exampleQuestions = [
-  "What's your technical background?",
-  "Tell me about your AI experience",
-  "What are your most significant projects?",
-  "What technologies do you specialize in?",
-  "What kind of role are you looking for?",
+  "What's Ivan's technical background?",
+  "Tell me about Ivan's AI experience",
+  "What are Ivan's most significant projects?",
+  "What technologies does Ivan specialize in?",
+  "What kind of role is Ivan looking for?",
+  "Which workshops did Ivan attend?",
 ];
 
 export default function Chat({ initialMessages, sessionId }: ChatProps) {
@@ -179,7 +180,22 @@ export default function Chat({ initialMessages, sessionId }: ChatProps) {
                     } border`
               }`}
             >
-              <ReactMarkdown>{message.content}</ReactMarkdown>
+              <ReactMarkdown
+                components={{
+                  p: ({ children }) => <p className="mb-2">{children}</p>,
+                  ul: ({ children }) => (
+                    <ul className="list-disc pl-5">{children}</ul>
+                  ),
+                  li: ({ children }) => <li className="mb-1">{children}</li>,
+                  a: ({ children, href }) => (
+                    <a href={href} className="text-blue-500 hover:underline">
+                      {children}
+                    </a>
+                  ),
+                }}
+              >
+                {message.content}
+              </ReactMarkdown>
             </div>
           </div>
         ))}

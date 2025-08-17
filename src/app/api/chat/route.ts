@@ -54,15 +54,13 @@ export async function POST(req: Request) {
     value: userMessage.content,
   });
 
-  console.log("User message:", userMessage.content);
-
   // Query for similar documents
   const { data: documents, error: matchError } = await supabase.rpc(
     "match_documents",
     {
       query_embedding: embedding,
       match_threshold: 0.1,
-      match_count: 5,
+      match_count: 10,
     }
   );
 
@@ -71,13 +69,9 @@ export async function POST(req: Request) {
     return new Response("Failed to match documents", { status: 500 });
   }
 
-  console.log("Found documents:", documents);
-
   const context = documents
     .map((doc: Document) => `- ${doc.content}`)
     .join("\n");
-
-  console.log("Context:", context);
 
   const googleProjectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
   const googleRegion = process.env.GOOGLE_REGION;
@@ -116,7 +110,6 @@ Example: Instead of “Worked with React”, say “Built and optimized user-fac
   - If the question is open-ended → use short paragraphs.
   - Keep answers scannable for busy recruiters.
   - Use emojis to make the response more engaging.
-  - Use new lines between paragraphs.
 
   #Context
   ${context}
